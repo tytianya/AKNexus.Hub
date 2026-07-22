@@ -1,0 +1,16 @@
+<Solution>
+  <Folder Name="/Framework/">
+    <Project Path="AKNexus.Framework.Abstractions/AKNexus.Framework.Abstractions.csproj" />
+    <Project Path="AKNexus.Framework.Application/AKNexus.Framework.Application.csproj" />
+    <Project Path="AKNexus.Framework.Core/AKNexus.Framework.Infrastructure.csproj" />
+    <Project Path="AKNexus.Framework.Data/AKNexus.Framework.Domain.csproj" />
+    <Project Path="AKNexus.Framework.Shared/AKNexus.Framework.Shared.csproj" />
+    <Project Path="AKNexus.Framework.Web/AKNexus.Framework.Web.csproj" />
+  </Folder>
+  <Folder Name="/Modules/" />
+  <Folder Name="/Modules/MES/">
+    <Project Path="MES.Application/MES.Application.csproj" />
+    <Project Path="MES.Web/MES.Web.csproj" />
+  </Folder>
+  <Project Path="AKNexus.Entry/AKNexus.Entry.csproj" />
+</Solution>

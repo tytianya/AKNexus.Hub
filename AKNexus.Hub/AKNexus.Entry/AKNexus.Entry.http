@@ -1,0 +1,6 @@
+@AKNexus.Entry_HostAddress = http://localhost:5071
+
+GET {{AKNexus.Entry_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

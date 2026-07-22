@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>AKNexus.Framework.Infrastructure</RootNamespace>
+        <Description>Framework 基础设施层 - 所有技术实现集中于此</Description>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <!-- Furion 核心（完整包，包含 Swagger） -->
+        
+        <!-- Furion 扩展 -->
+        
+        <!-- 数据库 -->
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.27" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.27">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.27" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.27" />
+        
+        <!-- 缓存 -->
+        <PackageReference Include="StackExchange.Redis" Version="2.8.24" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\AKNexus.Framework.Abstractions\AKNexus.Framework.Abstractions.csproj" />
+        <ProjectReference Include="..\AKNexus.Framework.Domain\AKNexus.Framework.Domain.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>AKNexus.Framework.Application</RootNamespace>
+        <Description>Framework 应用服务基础层 - 业务编排</Description>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\AKNexus.Core\AKNexus.Core.csproj" />
+        <ProjectReference Include="..\AKNexus.Framework.Abstractions\AKNexus.Framework.Abstractions.csproj" />
+        <ProjectReference Include="..\AKNexus.Framework.Domain\AKNexus.Framework.Domain.csproj" />
+    </ItemGroup>
+
+</Project>

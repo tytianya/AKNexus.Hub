@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>AKNexus.Framework.Web</RootNamespace>
+        <Description>Framework Web 基础层 - API 规范</Description>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <!-- API 版本控制（可选） -->
+        <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\AKNexus.Core\AKNexus.Core.csproj" />
+        <ProjectReference Include="..\AKNexus.Framework.Abstractions\AKNexus.Framework.Abstractions.csproj" />
+        <ProjectReference Include="..\AKNexus.Framework.Application\AKNexus.Framework.Application.csproj" />
+        <ProjectReference Include="..\AKNexus.Framework.Infrastructure\AKNexus.Framework.Infrastructure.csproj" />
+    </ItemGroup>
+
+</Project>

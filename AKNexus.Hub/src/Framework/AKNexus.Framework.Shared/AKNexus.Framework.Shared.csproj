@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>AKNexus.Framework.Shared</RootNamespace>
+        <Description>Framework 公共资源层 - 零依赖</Description>
+    </PropertyGroup>
+
+    <!-- 无包引用，零依赖 -->
+
+</Project>

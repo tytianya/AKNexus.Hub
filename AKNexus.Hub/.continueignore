@@ -1,0 +1,15 @@
+# 忽略 .NET 编译和包缓存目录
+**/bin/
+**/obj/
+*.nuget
+project.assets.json
+project.nuget.cache
+
+# 忽略前端/通用构建产物
+**/node_modules/
+**/dist/
+**/build/
+
+# 忽略日志和临时文件
+*.log
+*.tmp

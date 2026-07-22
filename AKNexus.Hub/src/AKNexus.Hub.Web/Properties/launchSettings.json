@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "AKNexus.Hub.Web": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:57388;http://localhost:57389"
+    }
+  }
+}
