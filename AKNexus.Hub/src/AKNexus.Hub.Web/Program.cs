@@ -1,15 +1,15 @@
 using AKNexus.Framework.Abstractions.Repositories;
 using AKNexus.Framework.Abstractions.UnitOfWork;
-using AKNexus.Framework.Application.Contracts;
 using AKNexus.Framework.Infrastructure.Data;
+using AKNexus.Framework.Infrastructure.DbContexts;
+using AKNexus.Framework.Infrastructure.Entities;
 using AKNexus.Framework.Infrastructure.Repositories;
 using AKNexus.Framework.Infrastructure.UnitOfWork;
 using AKNexus.Framework.Web.Extensions;
 using AKNexus.Framework.Web.Middlewares;
-using AKNexus.Hub.Web.DbContexts;
-using AKNexus.Hub.Web.Entities;
-using AKNexus.Hub.Web.Repositories;
 using AKNexus.Hub.Web.Dtos;
+using AKNexus.Hub.Web.Extensions;
+using AKNexus.Hub.Web.Services;
 using Furion;
 using Mapster;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -35,23 +35,9 @@ app.Run();
 /// </summary>
 void ConfigureServices(IServiceCollection services, IConfiguration configuration)
 {
-    // 添加Framework Web服务（已包含 AddInject）
-    services.AddFrameworkWeb(configuration, frameworkServices =>
-    {
-        // 配置数据库上下文（支持动态切换）
-        frameworkServices.AddDynamicDbContext<HubDbContext>(configuration, (options, dbType, connectionString) =>
-        {
-            options.EnableDetailedErrors(true);
-            options.EnableSensitiveDataLogging(builder.Environment.IsDevelopment());
-        });
+    //核心：激活组件自主注入
+    builder.Services.AddAKNexus(configuration,null);
 
-        // 注册仓储和工作单元
-        frameworkServices.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-        frameworkServices.AddScoped<IUnitOfWork, UnitOfWork<HubDbContext>>();
-
-        // 注册示例服务
-        frameworkServices.AddScoped<IUserService, UserService>();
-    });
 
     // 配置JWT认证
     services.AddAuthentication(options =>
@@ -89,21 +75,6 @@ void ConfigureServices(IServiceCollection services, IConfiguration configuration
 
     // 配置Mapster映射
     ConfigureMapper();
-
-    // 添加健康检查
-    var healthChecksBuilder = services.AddHealthChecks();
-    
-    var connectionString = configuration.GetConnectionString("Default");
-    if (!string.IsNullOrEmpty(connectionString))
-    {
-        healthChecksBuilder.AddNpgSql(connectionString);
-    }
-    
-    var redisConnection = configuration["Redis:ConnectionString"];
-    if (!string.IsNullOrEmpty(redisConnection))
-    {
-        healthChecksBuilder.AddRedis(redisConnection);
-    }
 }
 
 /// <summary>
@@ -138,88 +109,4 @@ void ConfigureMapper()
 
     TypeAdapterConfig<UserCreateInput, User>.NewConfig();
     TypeAdapterConfig<UserUpdateInput, User>.NewConfig();
-}
-
-/// <summary>
-/// 示例用户服务接口
-/// </summary>
-public interface IUserService : IServiceContract<UserDto, UserCreateInput, UserUpdateInput>
-{
-    Task<UserDto?> GetByUsernameAsync(string username, CancellationToken cancellationToken = default);
-    Task<bool> ValidatePasswordAsync(string username, string password, CancellationToken cancellationToken = default);
-}
-
-/// <summary>
-/// 示例用户服务实现
-/// </summary>
-public class UserService : IUserService
-{
-    private readonly IRepository<User> _repository;
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly ILogger<UserService> _logger;
-
-    public UserService(IRepository<User> repository, IUnitOfWork unitOfWork, ILogger<UserService> logger)
-    {
-        _repository = repository;
-        _unitOfWork = unitOfWork;
-        _logger = logger;
-    }
-
-    public async Task<UserDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-    {
-        var user = await _repository.GetByIdAsync(id, cancellationToken);
-        return user?.Adapt<UserDto>();
-    }
-
-    public async Task<List<UserDto>> GetAllAsync(CancellationToken cancellationToken = default)
-    {
-        var users = await _repository.GetAllAsync(cancellationToken);
-        return users.Select(u => u.Adapt<UserDto>()).ToList();
-    }
-
-    public async Task<UserDto> CreateAsync(UserCreateInput input, CancellationToken cancellationToken = default)
-    {
-        var user = input.Adapt<User>();
-        user.PasswordHash = HashPassword(input.Password);
-        var result = await _repository.AddAsync(user, cancellationToken);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-        return result.Adapt<UserDto>();
-    }
-
-    public async Task UpdateAsync(Guid id, UserUpdateInput input, CancellationToken cancellationToken = default)
-    {
-        var user = await _repository.GetByIdAsync(id, cancellationToken);
-        if (user == null)
-            throw new InvalidOperationException("用户不存在");
-
-        input.Adapt(user);
-        await _repository.UpdateAsync(user, cancellationToken);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-    }
-
-    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
-    {
-        await _repository.DeleteByIdAsync(id, cancellationToken);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-    }
-
-    public async Task<UserDto?> GetByUsernameAsync(string username, CancellationToken cancellationToken = default)
-    {
-        var allUsers = await _repository.GetAllAsync(cancellationToken);
-        var user = allUsers.FirstOrDefault(u => u.Username == username);
-        return user?.Adapt<UserDto>();
-    }
-
-    public async Task<bool> ValidatePasswordAsync(string username, string password, CancellationToken cancellationToken = default)
-    {
-        var allUsers = await _repository.GetAllAsync(cancellationToken);
-        var user = allUsers.FirstOrDefault(u => u.Username == username);
-        if (user == null) return false;
-        return user.PasswordHash == HashPassword(password);
-    }
-
-    private string HashPassword(string password)
-    {
-        return Convert.ToBase64String(System.Security.Cryptography.SHA256.HashData(Encoding.UTF8.GetBytes(password)));
-    }
 }

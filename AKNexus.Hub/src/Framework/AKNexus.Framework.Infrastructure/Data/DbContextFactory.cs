@@ -16,6 +16,33 @@ public enum DatabaseType
 }
 
 /// <summary>
+/// 数据库默认配置
+/// </summary>
+public class DatabaseConfig
+{
+    public DatabaseType DatabaseType
+    {
+        get
+        {
+            var databaseType = ConnectionStringName switch
+            {
+                "Default" => DatabaseType.PostgreSQL,
+                "SqlServer" => DatabaseType.SqlServer,
+                "MySql" => DatabaseType.MySql,
+                "Sqlite" => DatabaseType.Sqlite,
+                _ => DatabaseType.PostgreSQL,
+            };
+
+            return databaseType;
+        }
+    }
+    /// <summary>
+    /// 默认连接数据库名称
+    /// </summary>
+    public string ConnectionStringName { get; set; } = "Default";
+}
+
+/// <summary>
 /// 数据库连接配置
 /// </summary>
 public class DatabaseConnectionConfig
@@ -36,78 +63,6 @@ public class DatabaseConnectionConfig
     public string ConnectionStringName { get; set; } = "Default";
 }
 
-/// <summary>
-/// 多数据库上下文工厂 - 支持动态切换数据库
-/// </summary>
-public static class DbContextFactory
-{
-    /// <summary>
-    /// 添加数据库上下文（支持动态切换）
-    /// </summary>
-    public static IServiceCollection AddDynamicDbContext<TDbContext>(
-        this IServiceCollection services,
-        IConfiguration configuration,
-        Action<DbContextOptionsBuilder, DatabaseType, string>? optionsAction = null)
-        where TDbContext : DbContext
-    {
-        services.AddDbContext<TDbContext>((sp, options) =>
-        {
-            var connectionConfig = sp.GetRequiredService<DatabaseConnectionConfig>();
-            var connectionString = configuration.GetConnectionString(connectionConfig.ConnectionStringName)
-                ?? connectionConfig.ConnectionString;
-
-            ConfigureDatabaseOptions(options, connectionConfig.DatabaseType, connectionString, optionsAction);
-        });
-
-        services.AddScoped<DatabaseConnectionConfig>();
-        services.AddScoped<IDbContextSwitcher, DbContextSwitcher>();
-
-        return services;
-    }
-
-    /// <summary>
-    /// 配置数据库选项
-    /// </summary>
-    private static void ConfigureDatabaseOptions(
-        DbContextOptionsBuilder options,
-        DatabaseType databaseType,
-        string connectionString,
-        Action<DbContextOptionsBuilder, DatabaseType, string>? optionsAction)
-    {
-        switch (databaseType)
-        {
-            case DatabaseType.PostgreSQL:
-                options.UseNpgsql(connectionString, opt =>
-                {
-                    opt.EnableRetryOnFailure(3);
-                    opt.CommandTimeout(30);
-                });
-                break;
-
-            case DatabaseType.SqlServer:
-                options.UseSqlServer(connectionString, opt =>
-                {
-                    opt.EnableRetryOnFailure(3);
-                    opt.CommandTimeout(30);
-                });
-                break;
-
-            case DatabaseType.MySql:
-                // 需要安装 Pomelo.EntityFrameworkCore.MySql
-                // options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
-                throw new NotSupportedException("MySQL support requires Pomelo.EntityFrameworkCore.MySql package");
-
-            case DatabaseType.Sqlite:
-                options.UseSqlite(connectionString);
-                break;
-
-            default:
-                throw new NotSupportedException($"Database type {databaseType} is not supported");
-        }
-
-        optionsAction?.Invoke(options, databaseType, connectionString);
-    }
-}
 
 /// <summary>
 /// 数据库上下文切换器接口

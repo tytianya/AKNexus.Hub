@@ -1,9 +1,8 @@
 using AKNexus.Framework.Abstractions.Repositories;
-using AKNexus.Framework.Infrastructure.Repositories;
-using AKNexus.Hub.Web.DbContexts;
-using AKNexus.Hub.Web.Entities;
+using AKNexus.Framework.Infrastructure.DbContexts;
+using AKNexus.Framework.Infrastructure.Entities;
 
-namespace AKNexus.Hub.Web.Repositories;
+namespace AKNexus.Framework.Infrastructure.Repositories;
 
 /// <summary>
 /// 用户仓储接口

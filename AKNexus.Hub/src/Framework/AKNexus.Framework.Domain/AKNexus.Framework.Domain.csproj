@@ -9,6 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\..\AKNexus.Core\AKNexus.Core.csproj" />
         <ProjectReference Include="..\AKNexus.Framework.Abstractions\AKNexus.Framework.Abstractions.csproj" />
     </ItemGroup>
 

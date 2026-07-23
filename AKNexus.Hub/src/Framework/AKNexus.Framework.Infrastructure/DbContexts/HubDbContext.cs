@@ -1,8 +1,8 @@
 using AKNexus.Framework.Infrastructure.Data;
-using AKNexus.Hub.Web.Entities;
+using AKNexus.Framework.Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace AKNexus.Hub.Web.DbContexts;
+namespace AKNexus.Framework.Infrastructure.DbContexts;
 
 /// <summary>
 /// Hub数据库上下文

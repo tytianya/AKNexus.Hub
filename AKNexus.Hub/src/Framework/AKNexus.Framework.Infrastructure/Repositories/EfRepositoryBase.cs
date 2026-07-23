@@ -35,6 +35,33 @@ public abstract class EfRepositoryBase<TEntity, TKey, TDbContext> : IRepository<
         return await DbSet.ToListAsync(cancellationToken);
     }
 
+    /// <summary>
+    /// 条件查询
+    /// </summary>
+    public virtual async Task<IEnumerable<TEntity>> WhereAsync(
+        System.Linq.Expressions.Expression<Func<TEntity, bool>> predicate,
+        CancellationToken cancellationToken = default)
+    {
+        return await DbSet.Where(predicate).ToListAsync(cancellationToken);
+    }
+
+    /// <summary>
+    /// 获取可查询对象（支持LINQ）
+    /// </summary>
+    public virtual IQueryable<TEntity> Query()
+    {
+        return DbSet.AsQueryable();
+    }
+
+    /// <summary>
+    /// 原生SQL查询（返回DTO）
+    /// </summary>
+    public virtual async Task<IEnumerable<TDto>> FromSqlRawAsync<TDto>(string sql, params object[] parameters)
+        where TDto : class
+    {
+        return await DbContext.Database.SqlQueryRaw<TDto>(sql, parameters).ToListAsync();
+    }
+
     public virtual async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
         var entry = await DbSet.AddAsync(entity, cancellationToken);

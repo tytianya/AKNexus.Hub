@@ -1,16 +1,14 @@
 <Solution>
+  <Folder Name="/Core/">
+    <Project Path="AKNexus.Core/AKNexus.Core.csproj" />
+  </Folder>
   <Folder Name="/Framework/">
-    <Project Path="AKNexus.Framework.Abstractions/AKNexus.Framework.Abstractions.csproj" />
-    <Project Path="AKNexus.Framework.Application/AKNexus.Framework.Application.csproj" />
-    <Project Path="AKNexus.Framework.Core/AKNexus.Framework.Infrastructure.csproj" />
-    <Project Path="AKNexus.Framework.Data/AKNexus.Framework.Domain.csproj" />
-    <Project Path="AKNexus.Framework.Shared/AKNexus.Framework.Shared.csproj" />
-    <Project Path="AKNexus.Framework.Web/AKNexus.Framework.Web.csproj" />
+    <Project Path="src/Framework/AKNexus.Framework.Web/AKNexus.Framework.Web.csproj" />
+    <Project Path="src/Framework/AKNexus.Framework.Application/AKNexus.Framework.Application.csproj" />
+    <Project Path="src/Framework/AKNexus.Framework.Domain/AKNexus.Framework.Domain.csproj" />
+    <Project Path="src/Framework/AKNexus.Framework.Infrastructure/AKNexus.Framework.Infrastructure.csproj" />
+    <Project Path="src/Framework/AKNexus.Framework.Shared/AKNexus.Framework.Shared.csproj" />
+    <Project Path="src/Framework/AKNexus.Framework.Abstractions/AKNexus.Framework.Abstractions.csproj" />
   </Folder>
-  <Folder Name="/Modules/" />
-  <Folder Name="/Modules/MES/">
-    <Project Path="MES.Application/MES.Application.csproj" />
-    <Project Path="MES.Web/MES.Web.csproj" />
-  </Folder>
-  <Project Path="AKNexus.Entry/AKNexus.Entry.csproj" />
+  <Project Path="src/AKNexus.Hub.Web/AKNexus.Hub.Web.csproj" />
 </Solution>

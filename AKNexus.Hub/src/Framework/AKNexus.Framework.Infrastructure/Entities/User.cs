@@ -1,7 +1,7 @@
 using AKNexus.Framework.Domain.Entities;
 using System.ComponentModel.DataAnnotations;
 
-namespace AKNexus.Hub.Web.Entities;
+namespace AKNexus.Framework.Infrastructure.Entities;
 
 /// <summary>
 /// 用户实体

@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
+using System.Linq.Expressions;
 
 namespace AKNexus.Framework.Infrastructure.Data;
 
@@ -15,15 +17,36 @@ public abstract class BaseDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        // 全局查询过滤器 - 软删除
+        #region 全局查询过滤器
         foreach (var entityType in modelBuilder.Model.GetEntityTypes())
         {
-            //if (typeof(ISoftDelete).IsAssignableFrom(entityType.ClrType))
-            //{
-            //    modelBuilder.Entity(entityType.ClrType)
-            //        .HasQueryFilter(e => EF.Property<bool>(e, "IsDeleted") == false);
-            //}
-        }
+            //软删除
+            if (typeof(ISoftDelete).IsAssignableFrom(entityType.ClrType))
+            {
+                var parameter = Expression.Parameter(entityType.ClrType, "e");
+
+
+                var property = Expression.Property(
+                    parameter,
+                    nameof(ISoftDelete.IsDeleted)
+                );
+
+                var condition = Expression.Equal(
+                    property,
+                    Expression.Constant(false)
+                );
+
+                var lambda = Expression.Lambda(
+                    condition,
+                    parameter
+                );
+
+                modelBuilder.Entity(entityType.ClrType)
+                    .HasQueryFilter(lambda);
+
+            }
+        } 
+        #endregion
 
         // 应用所有配置
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(BaseDbContext).Assembly);
