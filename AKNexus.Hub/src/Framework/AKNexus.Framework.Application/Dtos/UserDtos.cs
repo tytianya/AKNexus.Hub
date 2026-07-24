@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace AKNexus.Hub.Web.Dtos;
+namespace AKNexus.Framework.Application.Dtos;
 
 /// <summary>
 /// 用户DTO

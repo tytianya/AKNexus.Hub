@@ -9,12 +9,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.29" />
-		<PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="10.0.10" />
-    </ItemGroup>
-
-    <ItemGroup>
         <ProjectReference Include="..\..\AKNexus.Core\AKNexus.Core.csproj" />
+        <ProjectReference Include="..\..\AKNexus.Framework.Logging\AKNexus.Framework.Logging.csproj" />
         <ProjectReference Include="..\Framework\AKNexus.Framework.Web\AKNexus.Framework.Web.csproj" />
         <ProjectReference Include="..\Framework\AKNexus.Framework.Shared\AKNexus.Framework.Shared.csproj" />
     </ItemGroup>

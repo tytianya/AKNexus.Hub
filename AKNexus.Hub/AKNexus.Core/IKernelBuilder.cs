@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace AKNexus.Core
 {
@@ -12,6 +13,7 @@ namespace AKNexus.Core
 
         IHostEnvironment Environment { get; }
     }
+
     public sealed class KernelBuilder : IKernelBuilder
     {
         public IServiceCollection Services { get; }

@@ -1,7 +1,9 @@
 ﻿using AKNexus.Core;
+using AKNexus.Core.Log;
 using AKNexus.Framework.Application;
-using AKNexus.Framework.Domain;
-using Microsoft.EntityFrameworkCore.Storage;
+using AKNexus.Framework.Application.Dtos;
+using AKNexus.Framework.Infrastructure.Entities;
+using Mapster;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -14,12 +16,24 @@ namespace AKNexus.Framework.Application
 {
     public sealed class ApplicationRegistrar : IAssemblyRegistrar
     {
-        public int Order => 10;  // 应用层在基础设施之后
+        public int Order => 10;
         public void Configure(IKernelBuilder builder)
         {
-            Console.WriteLine("Application Register");
+            StartupLogger.Write(builder.Configuration, "应用组件启动……");
+            ConfigureMapper();
+            StartupLogger.Write(builder.Configuration, "应用组件启动成功");
+        }
 
-            builder.Services.AddSingleton<Test>();
+        /// <summary>
+        /// 配置对象映射
+        /// </summary>
+        void ConfigureMapper()
+        {
+            TypeAdapterConfig<User, UserDto>.NewConfig()
+                .Map(dest => dest.FullName, src => $"{src.FirstName} {src.LastName}");
+
+            TypeAdapterConfig<UserCreateInput, User>.NewConfig();
+            TypeAdapterConfig<UserUpdateInput, User>.NewConfig();
         }
     }
 }

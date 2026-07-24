@@ -22,7 +22,7 @@ namespace AKNexus.Framework.Infrastructure
 {
     internal class InfrastructureRegistrar : IAssemblyRegistrar
     {
-        public int Order => 1;  // 基础设施最先注册
+        public int Order => 1;
         public void Configure(IKernelBuilder builder)
         {
             var configuration = builder.Configuration;
@@ -66,6 +66,18 @@ namespace AKNexus.Framework.Infrastructure
             // 注册仓储和工作单元
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork<HubDbContext>>();
+            #endregion
+
+            #region redis缓存
+            var redisConnection = configuration["Redis:ConnectionString"];
+            if (!string.IsNullOrEmpty(redisConnection))
+            {
+                services.AddStackExchangeRedisCache(options =>
+                {
+                    options.Configuration = redisConnection;
+                    options.InstanceName = configuration["Redis:InstanceName"];
+                });
+            }
             #endregion
         }
 

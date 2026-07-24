@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{154FB123-A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AKNexus.Core", "AKNexus.Core\AKNexus.Core.csproj", "{6BA89B35-5315-4BA1-9F63-1C06EF16A1FE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AKNexus.Framework.Logging", "AKNexus.Framework.Logging\AKNexus.Framework.Logging.csproj", "{77F18E41-D43C-4436-9A55-E251F9E993F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -60,6 +62,10 @@ Global
 		{6BA89B35-5315-4BA1-9F63-1C06EF16A1FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BA89B35-5315-4BA1-9F63-1C06EF16A1FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6BA89B35-5315-4BA1-9F63-1C06EF16A1FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77F18E41-D43C-4436-9A55-E251F9E993F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77F18E41-D43C-4436-9A55-E251F9E993F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77F18E41-D43C-4436-9A55-E251F9E993F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77F18E41-D43C-4436-9A55-E251F9E993F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,6 +78,7 @@ Global
 		{3A0B1E2F-6D5C-8E7F-B9A0-D2E3F4A5B6C7} = {C1EF7885-A291-4E59-ADB8-8129EF4AE27A}
 		{8B5C2D6A-1E2F-4A7B-9C3D-5E6F8A9B0C1D} = {C1EF7885-A291-4E59-ADB8-8129EF4AE27A}
 		{6BA89B35-5315-4BA1-9F63-1C06EF16A1FE} = {154FB123-A4FB-43E9-A146-6B323036100F}
+		{77F18E41-D43C-4436-9A55-E251F9E993F1} = {C1EF7885-A291-4E59-ADB8-8129EF4AE27A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6C8EDE33-6B86-4B77-8A4B-F150D6BC7773}

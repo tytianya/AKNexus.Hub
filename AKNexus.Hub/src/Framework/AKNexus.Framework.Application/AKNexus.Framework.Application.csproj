@@ -12,6 +12,7 @@
         <ProjectReference Include="..\..\..\AKNexus.Core\AKNexus.Core.csproj" />
         <ProjectReference Include="..\AKNexus.Framework.Abstractions\AKNexus.Framework.Abstractions.csproj" />
         <ProjectReference Include="..\AKNexus.Framework.Domain\AKNexus.Framework.Domain.csproj" />
+        <ProjectReference Include="..\AKNexus.Framework.Infrastructure\AKNexus.Framework.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

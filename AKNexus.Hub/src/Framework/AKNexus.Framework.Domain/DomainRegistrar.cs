@@ -1,4 +1,5 @@
 ﻿using AKNexus.Core;
+using AKNexus.Core.Log;
 using AKNexus.Framework.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -14,9 +15,9 @@ namespace AKNexus.Framework.Domain
     {
         public void Configure(IKernelBuilder builder)
         {
-            Console.WriteLine("Redis Register");
+            StartupLogger.Write(builder.Configuration, "领域组件启动……");
 
-            //builder.Services.AddSingleton<TestDomain>();
+            StartupLogger.Write(builder.Configuration, "领域组件启动成功");
         }
     }
 }

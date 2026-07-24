@@ -2,7 +2,6 @@ using AKNexus.Framework.Abstractions.Repositories;
 using AKNexus.Framework.Abstractions.UnitOfWork;
 using AKNexus.Framework.Application.Contracts;
 using AKNexus.Framework.Infrastructure.Data;
-using AKNexus.Hub.Web.Dtos;
 using Furion;
 using Furion.DynamicApiController;
 using Mapster;
@@ -10,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Furion.FriendlyException;
 using AKNexus.Framework.Domain;
 using AKNexus.Framework.Infrastructure.Entities;
+using AKNexus.Framework.Application.Dtos;
+using Newtonsoft.Json;
 
 namespace AKNexus.Hub.Web.Services;
 
@@ -56,11 +57,13 @@ public class UserService : IUserService, IDynamicApiController
 {
     private readonly IRepository<User> _repository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly ILogger<UserService> _logger;
 
-    public UserService(IRepository<User> repository, IUnitOfWork unitOfWork)
+    public UserService(IRepository<User> repository, IUnitOfWork unitOfWork,ILogger<UserService> logger)
     {
         _repository = repository;
         _unitOfWork = unitOfWork;
+        _logger= logger; 
     }
 
     /// <summary>
@@ -72,6 +75,7 @@ public class UserService : IUserService, IDynamicApiController
     {
         var tts = AppDomain.CurrentDomain.GetAssemblies();
         var users = await _repository.GetAllAsync(cancellationToken);
+        _logger.LogWarning("hello:" + JsonConvert.SerializeObject(users));
         return users.Adapt<List<UserDto>>();
     }
 
