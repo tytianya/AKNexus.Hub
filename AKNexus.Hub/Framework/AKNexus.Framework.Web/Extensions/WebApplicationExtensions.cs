@@ -1,10 +1,13 @@
+using AKNexus.Core;
+using AKNexus.Core.Options;
+using AKNexus.Framework.Web.Middlewares;
+using Asp.Versioning;
 using Furion;
 using Furion.SpecificationDocument;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Asp.Versioning;
 using System.Reflection;
 
 namespace AKNexus.Framework.Web.Extensions;
@@ -18,29 +21,48 @@ public static class WebApplicationExtensions
     /// <summary>
     /// 配置Web应用中间件
     /// </summary>
-    public static WebApplication UseFrameworkWeb(this WebApplication app)
+    public static IKernelApplication UseFrameworkWeb(this IKernelApplication app,
+        Action<FrameworkWebOptions>? configure = null)
     {
-        // 启用 Furion 中间件（包含 Swagger）
-        app.UseInject();
+        var options = new FrameworkWebOptions();
+        configure?.Invoke(options);
+        var app2 = app.App;
 
-        // CORS
-        app.UseCors("AllowAll");
+        // Furion 中间件 (Swagger 等)
+        if (options.UseInject) app.App.UseInject();
 
-        // HTTPS重定向
-        app.UseHttpsRedirection();
+        // 全局异常处理
+        if (options.UseGlobalException) app.App.UseGlobalException();
 
-        // 路由
-        app.UseRouting();
+        // 开发 / 生产环境区别配置
+        if (app.Environment.IsDevelopment())
+        {
+            app.App.UseDeveloperExceptionPage();
+        }
+        else
+        {
+            app.App.UseHsts();
+        }
 
+        // CORS跨域
+        if (options.UseCors) app.App.UseCors(options.CorsPolicyName);
+
+        // HTTPS 重定向
+        if (options.UseHttpsRedirection) app.App.UseHttpsRedirection();
+
+        // 路由注册
+        app.App.UseRouting();
+
+        // ================= 核心：JWT / 认证授权的热插拔控制 =================
         // 认证授权
-        app.UseAuthentication();
-        app.UseAuthorization();
+        if (options.UseAuthentication) app.App.UseAuthentication();
+        if (options.UseAuthorization) app.App.UseAuthorization();
 
         // 健康检查端点
-        app.MapHealthChecks("/health");
+        if (options.MapHealthChecks) app.Endpoints.MapHealthChecks("/health");
 
         // 映射控制器
-        app.MapControllers();
+        if (options.MapControllers) app.Endpoints.MapControllers();
 
         return app;
     }

@@ -18,5 +18,10 @@ namespace AKNexus.Core
         /// </summary>
         /// <param name="builder"></param>
         void Configure(IKernelBuilder builder);
+        /// <summary>
+        /// 使用功能
+        /// </summary>
+        /// <param name="app"></param>
+        void Use(IKernelApplication app) { }
     }
 }

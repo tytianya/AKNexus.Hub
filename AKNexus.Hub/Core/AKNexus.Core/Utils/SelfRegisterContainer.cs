@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AKNexus.Core
+namespace AKNexus.Core.Utils
 {
     /// <summary>
     /// 自注册组件的基本交互设定
     /// </summary>
-    public static class RegisterInfrastructure
+    public static class SelfRegisterContainer
     {
         /// <summary>
         /// 组件间共享的基础类型对象，必须是单例模式

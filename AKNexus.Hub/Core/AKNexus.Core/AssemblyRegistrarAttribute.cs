@@ -13,12 +13,12 @@ namespace AKNexus.Core
 
         public AssemblyRegistrarAttribute(Type registrarType)
         {
-            //if (!typeof(IAssemblyRegistrar)
-            //.IsAssignableFrom(registrarType))
-            //{
-            //    throw new ArgumentException(
-            //        $"{registrarType.Name}必须实现IAssemblyRegistrar");
-            //}
+            if (!typeof(IAssemblyRegistrar)
+            .IsAssignableFrom(registrarType))
+            {
+                throw new ArgumentException(
+                    $"{registrarType.Name}必须实现IAssemblyRegistrar");
+            }
 
             RegistrarType = registrarType;
         }

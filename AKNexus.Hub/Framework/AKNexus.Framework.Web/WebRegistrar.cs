@@ -5,6 +5,7 @@ using AKNexus.Framework.Abstractions.Services;
 using AKNexus.Framework.Application;
 using AKNexus.Framework.Infrastructure.Extensions;
 using AKNexus.Framework.Web;
+using AKNexus.Framework.Web.Extensions;
 using AKNexus.Framework.Web.Utils;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -104,6 +105,10 @@ namespace AKNexus.Framework.Web
             #endregion
 
             StartupLogger.Write(builder.Configuration, "web组件启动成功");
+        }
+        public void Use(IKernelApplication app)
+        {
+            app.UseFrameworkWeb();
         }
     }
 }
