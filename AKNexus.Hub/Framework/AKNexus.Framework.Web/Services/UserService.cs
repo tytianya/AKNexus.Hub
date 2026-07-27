@@ -11,8 +11,9 @@ using AKNexus.Framework.Domain;
 using AKNexus.Framework.Infrastructure.Entities;
 using AKNexus.Framework.Application.Dtos;
 using Newtonsoft.Json;
+using Microsoft.Extensions.Logging;
 
-namespace AKNexus.Hub.Web.Services;
+namespace AKNexus.Framework.Web.Services;
 
 /// <summary>
 /// 用户服务接口
