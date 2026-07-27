@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	<RootNamespace>AKNexus.Framework.Logging</RootNamespace>
+	<Description>Framework 日志框架 - 兼容 ASP.NET Core 原生日志</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\AKNexus.Core\AKNexus.Core.csproj" />
+  </ItemGroup>
+
+</Project>
