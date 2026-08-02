@@ -7,6 +7,8 @@ namespace AKNexus.Framework.Abstractions.Repositories;
 /// <typeparam name="TKey">主键类型</typeparam>
 public interface IRepository<TEntity, TKey> where TEntity : class
 {
+    #region 常规方法
+		
     /// <summary>
     /// 根据ID获取实体
     /// </summary>
@@ -16,21 +18,6 @@ public interface IRepository<TEntity, TKey> where TEntity : class
     /// 获取所有实体
     /// </summary>
     Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// 条件查询（场景二）
-    /// </summary>
-    Task<IEnumerable<TEntity>> WhereAsync(System.Linq.Expressions.Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// 获取可查询对象（场景一：LINQ复杂查询）
-    /// </summary>
-    IQueryable<TEntity> Query();
-
-    /// <summary>
-    /// 原生SQL查询（场景三：高性能DTO查询）
-    /// </summary>
-    Task<IEnumerable<TDto>> FromSqlRawAsync<TDto>(string sql, params object[] parameters) where TDto : class;
 
     /// <summary>
     /// 添加实体
@@ -66,6 +53,26 @@ public interface IRepository<TEntity, TKey> where TEntity : class
     /// 获取实体数量
     /// </summary>
     Task<int> CountAsync(CancellationToken cancellationToken = default);
+    #endregion
+
+    #region 高级方法
+
+    /// <summary>
+    /// 条件查询（场景一）
+    /// </summary>
+    Task<IEnumerable<TEntity>> WhereAsync(System.Linq.Expressions.Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// 获取可查询对象（场景二：LINQ复杂查询）
+    /// </summary>
+    IQueryable<TEntity> Query();
+
+    /// <summary>
+    /// 原生SQL查询（场景三：高性能DTO查询）
+    /// </summary>
+    Task<IEnumerable<TDto>> FromSqlRawAsync<TDto>(string sql, params object[] parameters) where TDto : class;
+
+    #endregion
 }
 
 /// <summary>

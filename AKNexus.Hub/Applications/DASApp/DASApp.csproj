@@ -26,7 +26,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Framework\AKNexus.Framework.Logging\AKNexus.Framework.Logging.csproj" />
     <ProjectReference Include="..\..\Framework\AKNexus.Framework.Web\AKNexus.Framework.Web.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\launchSettings.json">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
