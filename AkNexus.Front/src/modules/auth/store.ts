@@ -5,6 +5,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import type { UserInfo, AuthState, LoginParams, LoginResult } from './types'
+import { SUPER_ADMIN_ROLE } from './types'
 
 /** 默认认证配置 */
 export const defaultAuthConfig = {
@@ -30,6 +31,12 @@ export const useAuthStore = defineStore('auth', () => {
   /** 是否已登录 */
   const isLoggedIn = computed(() => !!accessToken.value && !!user.value)
 
+  /** 是否为超级管理员（拥有全部权限，可配置菜单等系统功能） */
+  const isSuperAdmin = computed(() => {
+    if (!user.value) return false
+    return user.value.roles.includes(SUPER_ADMIN_ROLE) || user.value.permissions.includes('*')
+  })
+
   /**
    * 登录
    * @param params 登录参数
@@ -47,8 +54,8 @@ export const useAuthStore = defineStore('auth', () => {
       user: {
         id: '1',
         username: params.username,
-        nickname: '管理员',
-        roles: ['admin'],
+        nickname: '超级管理员',
+        roles: [SUPER_ADMIN_ROLE, 'admin'],
         permissions: ['*']
       }
     }
@@ -134,6 +141,7 @@ export const useAuthStore = defineStore('auth', () => {
     accessToken,
     refreshToken,
     isLoggedIn,
+    isSuperAdmin,
     login,
     logout,
     refreshAccessToken,

@@ -27,7 +27,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AKNexus.Framework.Logging",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{8ED1D3C4-7AC1-449D-AA51-7BF35A593911}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DASApp", "Applications\DASApp\DASApp.csproj", "{30DDD7EF-187E-4BD7-83AA-E01C78938F6E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniMESApp", "Applications\MiniMESApp\MiniMESApp.csproj", "{30DDD7EF-187E-4BD7-83AA-E01C78938F6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

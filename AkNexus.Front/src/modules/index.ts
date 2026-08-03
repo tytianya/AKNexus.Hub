@@ -52,7 +52,7 @@ function createModuleContext(app: App, router: Router, meta: Module['meta']): Mo
     },
     getModule: (id: string) => moduleRegistry.get(id),
     getConfig: <T = any>(key: string, defaultValue?: T): T => {
-      return globalConfig.has(key) ? globalConfig.get(key) : defaultValue
+      return (globalConfig.has(key) ? globalConfig.get(key) : defaultValue) as T
     },
     setConfig: (key: string, value: any) => {
       globalConfig.set(key, value)
@@ -276,7 +276,7 @@ export function setGlobalConfig(key: string, value: any): void {
  * 获取全局配置
  */
 export function getGlobalConfig<T = any>(key: string, defaultValue?: T): T {
-  return globalConfig.has(key) ? globalConfig.get(key) : defaultValue
+  return (globalConfig.has(key) ? globalConfig.get(key) : defaultValue) as T
 }
 
 // 导出类型

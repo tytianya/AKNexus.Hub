@@ -53,7 +53,7 @@ public interface IUserService
 /// 使用 [DynamicApiController] 特性，无需创建 Controller
 /// 自动生成路由：/api/user/get-all-async, /api/user/get-by-id-async 等
 /// </remarks>
-[ApiDescriptionSettings("用户管理", Name = "User")]
+[ApiDescriptionSettings("User", Name = "User")]
 public class UserService : IUserService, IDynamicApiController
 {
     private readonly IRepository<User> _repository;

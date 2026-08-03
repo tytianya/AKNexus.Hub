@@ -8,6 +8,7 @@ import Layout from '/@/layouts/index.vue'
 export const baseRoutes: RouteRecordRaw[] = [
   {
     path: '/',
+    name: 'Layout',
     component: Layout,
     redirect: '/dashboard',
     children: [

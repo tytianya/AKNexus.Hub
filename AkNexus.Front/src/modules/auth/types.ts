@@ -59,6 +59,9 @@ export interface AuthState {
   refreshToken: string | null
 }
 
+/** 超级管理员角色标识 */
+export const SUPER_ADMIN_ROLE = 'superadmin'
+
 /** 认证配置 */
 export interface AuthConfig {
   /** 登录页面路径 */

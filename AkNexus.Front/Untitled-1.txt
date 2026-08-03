@@ -1,0 +1,23 @@
+
+[Unit]
+Description=miniMes Backend Service
+After=network.target
+
+[Service]
+# 1. 绑定你项目所在的绝对物理文件夹路径
+WorkingDirectory=/Proj/MiniMes
+
+# 2. 核心修改：直接指向没有后缀名的 Linux 原生可执行文件绝对路径
+ExecStart=/usr/bin/dotnet /Proj/MiniMes/AkNexus.MiniMESApp.dll
+
+# 3. 环境变量与保活配置
+Restart=always
+RestartSec=10
+KillSignal=SIGINT
+SyslogIdentifier=miniMes-backend
+User=root
+Environment=ASPNETCORE_URLS=http://0.0.0.0:5000
+Environment=ASPNETCORE_ENVIRONMENT=Production
+
+[Install]
+WantedBy=multi-user.target

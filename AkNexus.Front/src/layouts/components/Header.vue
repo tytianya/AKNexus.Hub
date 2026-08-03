@@ -3,12 +3,15 @@
  * 顶部工具栏组件
  */
 import { computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { toggleDarkMode, isDarkMode } from '/@/skins'
+import { useAuthStore } from '/@/modules/auth/store'
 
 defineOptions({ name: 'LayoutHeader' })
 
 const route = useRoute()
+const router = useRouter()
+const authStore = useAuthStore()
 
 // 面包屑数据
 const breadcrumbs = computed(() => {
@@ -22,6 +25,12 @@ const breadcrumbs = computed(() => {
 // 切换主题
 const handleToggleTheme = () => {
   toggleDarkMode()
+}
+
+// 退出登录
+const handleLogout = async () => {
+  await authStore.logout()
+  router.push('/')
 }
 </script>
 
@@ -52,17 +61,24 @@ const handleToggleTheme = () => {
         </el-button>
       </el-tooltip>
 
-      <!-- 用户头像（预留登录体系） -->
+      <!-- 用户头像 -->
       <el-dropdown trigger="click">
         <div class="user-avatar">
           <el-avatar :size="32" class="avatar">
             <el-icon :size="18"><User /></el-icon>
           </el-avatar>
+          <span v-if="authStore.isLoggedIn" class="user-name">
+            {{ authStore.user?.nickname || authStore.user?.username }}
+          </span>
+          <el-tag v-if="authStore.isSuperAdmin" type="danger" size="small" effect="plain" class="super-tag">
+            超管
+          </el-tag>
         </div>
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item>个人设置</el-dropdown-item>
-            <el-dropdown-item divided>退出登录</el-dropdown-item>
+            <el-dropdown-item @click="router.push('/system/menu')">菜单配置</el-dropdown-item>
+            <el-dropdown-item divided @click="handleLogout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -108,6 +124,18 @@ const handleToggleTheme = () => {
 
 .user-avatar {
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.user-name {
+  font-size: 13px;
+  color: var(--ds-text-primary);
+}
+
+.super-tag {
+  margin-left: 2px;
 }
 
 .avatar {

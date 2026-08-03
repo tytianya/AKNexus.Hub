@@ -10,8 +10,10 @@ declare module '*.vue' {
 interface ImportMetaEnv {
   /** 应用标题 */
   readonly VITE_APP_TITLE: string
-  /** API 基础路径 */
+  /** 后端地址（不含 /api）：留空走同域名 nginx 代理，填 http://host:port 直连后端 */
   readonly VITE_API_BASE_URL: string
+  /** 部署子路径：开发 / ，生产 /mes/ */
+  readonly VITE_BASE_URL: string
   /** 是否为生产环境 */
   readonly VITE_PROD: string
 }
