@@ -55,15 +55,37 @@ public abstract class BaseDbContext : DbContext
     public override int SaveChanges()
     {
         UpdateAuditEntities();
+        FixUnspecifiedDateTimeKinds();
         return base.SaveChanges();
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         UpdateAuditEntities();
+        FixUnspecifiedDateTimeKinds();
         return base.SaveChangesAsync(cancellationToken);
     }
 
+    /// <summary>
+    /// 自动修正所有 State 为 Added 或 Modified 实体中 Kind == Unspecified 的 DateTime 属性
+    /// </summary>
+    private void FixUnspecifiedDateTimeKinds()
+    {
+        var entries = ChangeTracker.Entries()
+            .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
+
+        foreach (var entry in entries)
+        {
+            foreach (var property in entry.Properties)
+            {
+                // C# 拆箱机制：当 CurrentValue 是 DateTime? 且不为空时，也会匹配为 DateTime
+                if (property.CurrentValue is DateTime dt && dt.Kind == DateTimeKind.Unspecified)
+                {
+                    property.CurrentValue = DateTime.SpecifyKind(dt, DateTimeKind.Utc);
+                }
+            }
+        }
+    }
     /// <summary>
     /// 自动更新审计字段
     /// </summary>
