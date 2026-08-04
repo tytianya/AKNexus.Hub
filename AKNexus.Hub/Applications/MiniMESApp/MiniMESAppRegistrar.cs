@@ -67,6 +67,7 @@ public class MiniMESAppRegistrar : IAssemblyRegistrar
     services.AddScoped<MiniMESApp.Repositories.IStationSoftwareBindingRepository, MiniMESApp.Repositories.StationSoftwareBindingRepository>();
     services.AddScoped<MiniMESApp.Repositories.IIncomingMaterialRepository, MiniMESApp.Repositories.IncomingMaterialRepository>();
     services.AddScoped<MiniMESApp.Repositories.IMaterialBarcodeRepository, MiniMESApp.Repositories.MaterialBarcodeRepository>();
+    services.AddScoped<MiniMESApp.Repositories.IBusinessLogRepository, MiniMESApp.Repositories.BusinessLogRepository>();
     }
 
     /// <summary>

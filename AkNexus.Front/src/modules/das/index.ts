@@ -36,7 +36,8 @@ const dasPages: DasPageConfig[] = [
   { path: '/das/stations', name: 'DasStations', component: () => import('/@/views/das/stations/index.vue'), title: '站点管理', icon: 'OfficeBuilding', menuId: 'das-stations', order: 60 },
   { path: '/das/mac', name: 'DasMac', component: () => import('/@/views/das/mac/index.vue'), title: 'MAC管理', icon: 'Connection', menuId: 'das-mac', order: 70 },
   { path: '/das/software', name: 'DasSoftware', component: () => import('/@/views/das/software/index.vue'), title: '测试软件', icon: 'Files', menuId: 'das-software', order: 80 },
-  { path: '/das/incoming', name: 'DasIncoming', component: () => import('/@/views/das/incoming/index.vue'), title: '来料检测', icon: 'Goods', menuId: 'das-incoming', order: 90 }
+  { path: '/das/incoming', name: 'DasIncoming', component: () => import('/@/views/das/incoming/index.vue'), title: '来料检测', icon: 'Goods', menuId: 'das-incoming', order: 90 },
+  { path: '/das/business-log', name: 'DasBusinessLog', component: () => import('/@/views/das/businessLog/index.vue'), title: '业务日志', icon: 'Document', menuId: 'das-business-log', order: 100 }
 ]
 
 /** DAS 模块定义 */

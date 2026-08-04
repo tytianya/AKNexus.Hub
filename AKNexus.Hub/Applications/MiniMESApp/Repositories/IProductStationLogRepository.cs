@@ -1,3 +1,4 @@
+using AKNexus.Framework.Abstractions.Dtos;
 using MiniMESApp.Dtos;
 using MiniMESApp.Entities;
 

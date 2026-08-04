@@ -2,6 +2,7 @@ using MiniMESApp.Data;
 using MiniMESApp.Dtos;
 using MiniMESApp.Entities;
 using Microsoft.EntityFrameworkCore;
+using AKNexus.Framework.Abstractions.Dtos;
 
 namespace MiniMESApp.Repositories;
 
@@ -66,8 +67,8 @@ public class ProductStationLogRepository : IProductStationLogRepository
         return new PagedResult<ProductStationLogDto>
         {
             Items = items,
-            Total = total,
-            Page = req.Page,
+            TotalCount = total,
+            PageNumber = req.Page,
             PageSize = req.PageSize
         };
     }

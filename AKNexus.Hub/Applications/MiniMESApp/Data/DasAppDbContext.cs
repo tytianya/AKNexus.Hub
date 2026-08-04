@@ -37,4 +37,5 @@ public class DasAppDbContext : BaseDbContext
     public DbSet<StationSoftwareBinding> StationSoftwareBindings => Set<StationSoftwareBinding>();
     public DbSet<IncomingMaterial> IncomingMaterials => Set<IncomingMaterial>();
     public DbSet<MaterialBarcode> MaterialBarcodes => Set<MaterialBarcode>();
+    public DbSet<BusinessLog> BusinessLogs => Set<BusinessLog>();
 }

@@ -3,6 +3,7 @@ using MiniMESApp.Dtos;
 using MiniMESApp.Repositories;
 using Furion.DynamicApiController;
 using Microsoft.AspNetCore.Mvc;
+using AKNexus.Framework.Abstractions.Dtos;
 
 namespace MiniMESApp.Services;
 
