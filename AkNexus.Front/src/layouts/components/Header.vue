@@ -13,6 +13,9 @@ const route = useRoute()
 const router = useRouter()
 const authStore = useAuthStore()
 
+// isDarkMode() 返回 ComputedRef<boolean>，在 setup 中解包后模板才能正确使用
+const darkMode = isDarkMode()
+
 // 面包屑数据
 const breadcrumbs = computed(() => {
   const matched = route.matched.filter(item => item.meta?.title)
@@ -53,10 +56,10 @@ const handleLogout = async () => {
     <!-- 右侧：工具栏 -->
     <div class="header-right">
       <!-- 主题切换 -->
-      <el-tooltip :content="isDarkMode() ? '切换浅色模式' : '切换深色模式'" placement="bottom">
+      <el-tooltip :content="darkMode ? '切换浅色模式' : '切换深色模式'" placement="bottom">
         <el-button text @click="handleToggleTheme">
           <el-icon :size="18">
-            <component :is="isDarkMode() ? 'Sunny' : 'Moon'" />
+            <component :is="darkMode ? 'Sunny' : 'Moon'" />
           </el-icon>
         </el-button>
       </el-tooltip>
